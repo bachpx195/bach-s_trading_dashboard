@@ -1,4 +1,3 @@
-from sqlalchemy import true
 from .constants import OPEN_INDEX, CLOSE_INDEX
 import pandas as pd
 

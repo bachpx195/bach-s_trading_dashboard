@@ -15,7 +15,10 @@ def add_day_name_column(df):
   return df
 
 def add_day_return_column(df):
-  df['day_return'] = percentage_change(df, OPEN_INDEX, CLOSE_INDEX)
+  df['day_return_oc'] = percentage_change(df, OPEN_INDEX, CLOSE_INDEX)
+  df['day_return_hl'] = percentage_change(df, LOW_INDEX, HIGH_INDEX)
+  df['day_return_cl'] = percentage_change(df, CLOSE_INDEX, LOW_INDEX)
+  df['day_return_hc'] = percentage_change(df, CLOSE_INDEX, HIGH_INDEX)
   return df
 
 def add_month_return_column(df):

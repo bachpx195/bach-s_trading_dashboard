@@ -42,7 +42,7 @@ def load_data_2h(merchandise_rate_name, interval, limit, start_date = None, end_
   return prices
 
 @st.cache_data
-def load_day_data(merchandise_rate_name, limit=None, start_date = None, end_date = None):
+def load_day_data(merchandise_rate_name, limit=None, start_date = None, end_date = None, is_add_candlestick_type = None):
   merchandise_rate = MerchandiseRate()
   merchandise_rate_id = merchandise_rate.find_by_slug(merchandise_rate_name)
   candlestick = Candlestick(merchandise_rate_id, 'day', limit=limit, sort="DESC", start_date=start_date, end_date=end_date)
@@ -53,6 +53,8 @@ def load_day_data(merchandise_rate_name, limit=None, start_date = None, end_date
   prices = add_day_name_column(prices)
   prices = add_day_column(prices)
   prices = add_inside_bar_type_column(prices)
+  if is_add_candlestick_type:
+    prices = add_type_column(prices)
 
   return prices
 
