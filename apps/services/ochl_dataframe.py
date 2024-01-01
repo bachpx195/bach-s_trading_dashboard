@@ -2,23 +2,15 @@ from apps.helpers.constants import HIGH_INDEX, LOW_INDEX, OPEN_INDEX, CLOSE_INDE
 from apps.helpers.utils import percentage_change, candlestick_type, type_continuous, until_now_type, candlestick_type_by_hour, is_2h_in_open_price
 from apps.helpers.datetime_helper import previous_day
 
-def add_return_column(df):
-  df['hour_return'] = percentage_change(df, OPEN_INDEX, CLOSE_INDEX)
-  return df
-
-def add_volatility_column(df):
-  df['volatility_return'] = percentage_change(df, LOW_INDEX, HIGH_INDEX)
-  return df
-
 def add_day_name_column(df):
   df['day_name'] = df[['open']].apply(lambda x: x.name.strftime("%A"), axis=1)
   return df
 
-def add_day_return_column(df):
-  df['day_return_oc'] = percentage_change(df, OPEN_INDEX, CLOSE_INDEX)
-  df['day_return_hl'] = percentage_change(df, LOW_INDEX, HIGH_INDEX)
-  df['day_return_cl'] = percentage_change(df, CLOSE_INDEX, LOW_INDEX)
-  df['day_return_hc'] = percentage_change(df, CLOSE_INDEX, HIGH_INDEX)
+def add_return_column(df):
+  df['return_oc'] = percentage_change(df, OPEN_INDEX, CLOSE_INDEX)
+  df['return_hl'] = percentage_change(df, LOW_INDEX, HIGH_INDEX)
+  df['return_cl'] = percentage_change(df, CLOSE_INDEX, LOW_INDEX)
+  df['return_hc'] = percentage_change(df, CLOSE_INDEX, HIGH_INDEX)
   return df
 
 def add_month_return_column(df):

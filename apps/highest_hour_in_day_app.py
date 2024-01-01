@@ -6,7 +6,7 @@ from hydralit_custom import HydraHeadApp
 from apps.helpers.constants import LIST_MERCHANDISE_RATE, HOURS_IN_DAY
 from apps.models.candlestick import Candlestick
 from apps.models.merchandise_rate import MerchandiseRate
-from apps.services.ochl_dataframe import add_hour_column, add_return_column, add_type_column, add_day_column, add_type_continue_column, add_volatility_column
+from apps.services.ochl_dataframe import add_hour_column, add_return_column, add_type_column, add_day_column, add_type_continue_column
 from apps.helpers.draw_chart import draw_pie_chart, draw_time_distribution, draw_bar_horizontal_chart
 from apps.services.custom_dataframe import custom_highest_hour_dataframe
 
@@ -21,7 +21,6 @@ class HighestHourInDayApp(HydraHeadApp):
     df = add_return_column(df)
     df = add_day_column(df)
     df = add_type_column(df)
-    df = add_volatility_column(df)
     return df
 
   def analytics_hour(self, df, hour_observe):

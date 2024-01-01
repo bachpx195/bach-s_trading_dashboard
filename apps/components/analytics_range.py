@@ -11,12 +11,12 @@ class AnalyticsRange:
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;} </style>', unsafe_allow_html=True)
     st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
     
-    st.bar_chart(self.df['day_return_oc'])
-    st.write(f"Trung binh giao dong Open Close la {self.df['day_return_oc'].apply(lambda x: abs(x)).mean()}")
+    st.bar_chart(self.df['return_oc'])
+    st.write(f"Trung binh giao dong Open Close la {self.df['return_oc'].apply(lambda x: abs(x)).mean()}")
     
-    st.bar_chart(self.df['day_return_hl'])
-    st.write(f"Trung binh giao dong High Low la {self.df['day_return_hl'].mean()}")
-    st.write(f"Trung binh giao dong Close Low la {self.df['day_return_cl'].apply(lambda x: abs(x)).mean()}")
-    st.write(f"Trung binh giao dong High Close la {self.df['day_return_hc'].mean()}")
+    st.bar_chart(self.df['return_hl'])
+    st.write(f"Trung binh giao dong High Low la {self.df['return_hl'].mean()}")
+    st.write(f"Trung binh giao dong Close Low la {self.df['return_cl'].apply(lambda x: abs(x)).mean()}")
+    st.write(f"Trung binh giao dong High Close la {self.df['return_hc'].mean()}")
 
     

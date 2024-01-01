@@ -1,6 +1,6 @@
 import streamlit as st
-from myenv.models.candlestick import Candlestick
-from myenv.models.merchandise_rate import MerchandiseRate
+from apps.models.candlestick import Candlestick
+from apps.models.merchandise_rate import MerchandiseRate
 from apps.services.ochl_dataframe import *
 
 @st.cache_data
@@ -22,10 +22,11 @@ def load_data(merchandise_rate_name, interval, limit, start_date = None, end_dat
   return prices
 
 @st.cache_data
-def load_hour_data(merchandise_rate_name, limit, start_date = None, end_date = None):
+def load_hour_data(merchandise_rate_name, limit, start_date=None, end_date=None, list_day=None, join_analytic_table='hour_analytics'):
   merchandise_rate = MerchandiseRate()
   merchandise_rate_id = merchandise_rate.find_by_slug(merchandise_rate_name)
-  candlestick = Candlestick(merchandise_rate_id, 'hour', limit=limit, sort="DESC", start_date=start_date, end_date=end_date)
+  candlestick = Candlestick(merchandise_rate_id, 'hour', limit=limit,
+                            sort="DESC", start_date=start_date, end_date=end_date, join_analytic_table=join_analytic_table, list_day=list_day)
 
   prices = candlestick.to_df()
   prices = add_return_column(prices)
@@ -48,7 +49,7 @@ def load_day_data(merchandise_rate_name, limit=None, start_date = None, end_date
   candlestick = Candlestick(merchandise_rate_id, 'day', limit=limit, sort="DESC", start_date=start_date, end_date=end_date)
 
   prices = candlestick.to_df()
-  prices = add_day_return_column(prices)
+  prices = add_return_column(prices)
   prices = add_day_volatility_column(prices)
   prices = add_day_name_column(prices)
   prices = add_day_column(prices)

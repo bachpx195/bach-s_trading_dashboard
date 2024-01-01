@@ -1,8 +1,10 @@
 import os
 import streamlit as st
 from hydralit_custom import HydraHeadApp
-from apps.concern.load_data import load_data, load_day_data
+from apps.concern.load_data import load_data, load_day_data, load_hour_data
 from apps.components.analytics_range import AnalyticsRange
+from apps.components.search_option import SearchOption
+from apps.components.raw_data import RawData
 
 MENU_LAYOUT = [1,1,1,7,2]
 CONFIG = {'displayModeBar': False, 'responsive': False}
@@ -17,11 +19,15 @@ class HomeApp(HydraHeadApp):
    def run(self):
       st.write('HI, IM A TRADER!')
 
-      alt_name = 'LTCUSDT'
+      merchandise_rate, record_limit, start_date, end_date, list_day = SearchOption().run()
 
-      day_number = st.number_input('Nhập số lượng dữ liệu (đơn vị: ngày)', value=50)
-      day_prices = load_day_data(alt_name, day_number, None, None, True)
+      day_prices = load_day_data(
+          merchandise_rate, record_limit, start_date, end_date, True)
+      hour_prices = load_hour_data(
+          merchandise_rate, record_limit*24, start_date, end_date, list_day, 'hour_analytics')
 
-      st.dataframe(day_prices)
+      RawData(day_prices, "Hiển thị data ngày").run()
+      RawData(hour_prices, "Hiển thị data giờ").run()
 
       AnalyticsRange(day_prices).run()
+      AnalyticsRange(hour_prices).run()
