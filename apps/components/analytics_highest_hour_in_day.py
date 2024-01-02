@@ -6,8 +6,6 @@ import numpy as np
 
 from apps.helpers.constants import LIST_HOUR_IN_DAY, LIST_DAY_IN_WEEK
 
-
-
 class AnalyticsHighestHourInDay:
   def __init__(self, dataframe):
     self.df = dataframe
@@ -30,8 +28,8 @@ class AnalyticsHighestHourInDay:
       list_hour_highest_return.append(len(hour_dataframe))
         
     fig = go.Figure(data=[go.Bar(
-        x=LIST_HOUR_IN_DAY, y=list_hour_highest_return,
-        text=list_hour_highest_return, hovertext=hovertext,
+      x=LIST_HOUR_IN_DAY, y=list_hour_highest_return,
+      text=list_hour_highest_return, hovertext=hovertext,
     )])
 
     fig.update_layout(xaxis={'type': 'category'})
