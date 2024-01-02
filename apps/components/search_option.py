@@ -9,6 +9,19 @@ class SearchOption:
     self.end_date = None
     self.list_day = None
 
+  def run(self):
+    # config css
+    st.write(
+        '<style>div.row-widget.stRadio > div{flex-direction:row;} </style>', unsafe_allow_html=True)
+    st.write(
+        '<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
+
+    self.select_merchandise_rate()
+    self.select_record_limit()
+    self.select_day()
+
+    return self.merchandise_rate, self.record_limit, self.start_date, self.end_date, self.list_day
+
   def select_merchandise_rate(self):
     c1,_ = st.columns([2, 2])
     with c1:
@@ -53,14 +66,4 @@ class SearchOption:
         placeholder="2023-12-20, 2023-12-21, ..."
       )
 
-  def run(self):
-    #config css
-    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;} </style>', unsafe_allow_html=True)
-    st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
-
-    self.select_merchandise_rate()
-    self.select_record_limit()
-    self.select_day()
-    
-    return self.merchandise_rate, self.record_limit, self.start_date, self.end_date, self.list_day
     

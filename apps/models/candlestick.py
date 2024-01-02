@@ -57,11 +57,21 @@ class Candlestick:
 
         db.cur.execute(sql_query)
         if self.join_analytic_table:
-            columns = ['date', 'open', 'high', 'close',
-                       'low', 'volumn', 'candlestick_type', 'range_type', 'is_inside_day', 'is_same_btc', 'continue_type']
-            datas = list(db.cur.fetchall())
-            data = [(da[8], da[3], da[4], da[5], da[6], da[9], da[18], da[19], da[20], da[26], da[27])
+            if self.join_analytic_table == 'hour_analytics':
+                columns = ['date', 'open', 'high', 'close',
+                        'low', 'volumn', 'date_with_binane', 'hour', 'return_oc', 'return_hl',
+                        'candlestick_type', 'range_type', 'is_highest_hour_return', 'is_reverse_increase_hour', 'is_reverse_decrease_hour',
+                        'is_same_btc', 'continue_by_day', 'continue_by_hour']
+                datas = list(db.cur.fetchall())
+                data = [(da[8], da[3], da[4], da[5], da[6], da[9], da[16], da[17], da[18], da[19], da[20], da[21], da[22], da[23], da[24], da[25], da[26], da[27])
                     for da in datas]
+            if self.join_analytic_table == 'day_analytics':
+                columns = ['date', 'open', 'high', 'close',
+                       'low', 'volumn', 'candlestick_type', 'range_type', 'is_inside_day', 'is_same_btc', 'continue_type']
+                datas = list(db.cur.fetchall())
+                data = [(da[8], da[3], da[4], da[5], da[6], da[9], da[18], da[19], da[20], da[26], da[27])
+                        for da in datas]
+        
         else:
             columns = ['date', 'open', 'high', 'close', 'low', 'volumn']
             datas = list(db.cur.fetchall())

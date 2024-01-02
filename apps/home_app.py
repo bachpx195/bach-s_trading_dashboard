@@ -4,6 +4,7 @@ from hydralit_custom import HydraHeadApp
 from apps.concern.load_data import load_data, load_day_data, load_hour_data
 from apps.components.analytics_range import AnalyticsRange
 from apps.components.search_option import SearchOption
+from apps.components.analytics_highest_hour_in_day import AnalyticsHighestHourInDay
 from apps.components.raw_data import RawData
 
 MENU_LAYOUT = [1,1,1,7,2]
@@ -29,5 +30,8 @@ class HomeApp(HydraHeadApp):
       RawData(day_prices, "Hiển thị data ngày").run()
       RawData(hour_prices, "Hiển thị data giờ").run()
 
-      AnalyticsRange(day_prices).run()
-      AnalyticsRange(hour_prices).run()
+      if st.checkbox("Hiển thị phân tích range"):
+         AnalyticsRange(day_prices).run()
+         AnalyticsRange(hour_prices).run()
+      if st.checkbox("Hiển thị phân tích theo giờ cao điểm"):
+         AnalyticsHighestHourInDay(hour_prices).run()

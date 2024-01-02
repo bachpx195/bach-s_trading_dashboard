@@ -29,10 +29,8 @@ def load_hour_data(merchandise_rate_name, limit, start_date=None, end_date=None,
                             sort="DESC", start_date=start_date, end_date=end_date, join_analytic_table=join_analytic_table, list_day=list_day)
 
   prices = candlestick.to_df()
-  prices = add_return_column(prices)
-  prices = add_hour_column(prices)
-  prices = add_day_column(prices)
-  prices = add_day_with_binance_column(prices)
+  prices = add_day_name_with_binance_column(prices)
+
   return prices
 
 @st.cache_data

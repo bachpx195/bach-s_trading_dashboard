@@ -6,6 +6,11 @@ def add_day_name_column(df):
   df['day_name'] = df[['open']].apply(lambda x: x.name.strftime("%A"), axis=1)
   return df
 
+def add_day_name_with_binance_column(df):
+  df['day_name'] = df[['open']].apply(
+      lambda x: __day_name_with_binance(x.name), axis=1)
+  return df
+
 def add_return_column(df):
   df['return_oc'] = percentage_change(df, OPEN_INDEX, CLOSE_INDEX)
   df['return_hl'] = percentage_change(df, LOW_INDEX, HIGH_INDEX)
@@ -156,3 +161,9 @@ def __day_with_binance(time):
     return previous_day(time.strftime("%Y-%m-%d"))
   else:
     return time.strftime("%Y-%m-%d")
+  
+def __day_name_with_binance(time):
+  if time.hour in [0, 1, 2, 3, 4, 5, 6]:
+    return previous_day(time.strftime("%Y-%m-%d"), "%A")
+  else:
+    return time.strftime("%A")

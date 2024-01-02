@@ -16,7 +16,5 @@ class AnalyticsRange:
     
     st.bar_chart(self.df['return_hl'])
     st.write(f"Trung binh giao dong High Low la {self.df['return_hl'].mean()}")
-    st.write(f"Trung binh giao dong Close Low la {self.df['return_cl'].apply(lambda x: abs(x)).mean()}")
-    st.write(f"Trung binh giao dong High Close la {self.df['return_hc'].mean()}")
 
     
