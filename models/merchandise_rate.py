@@ -24,6 +24,4 @@ class MerchandiseRate:
         query_sql = f"SELECT  * FROM DailyTradingJournal_development.merchandise_rates WHERE merchandise_rates.slug = '{slug}' LIMIT 1"
         db.cur.execute(query_sql)
         datas = list(db.cur.fetchall())
-        print("____________")
-        print(datas[0][0])
         return datas[0][0]

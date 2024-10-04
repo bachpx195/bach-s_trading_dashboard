@@ -2,8 +2,26 @@
 
 ## Install
 ```shellscript
-pip install .
+python3 -m venv .venv
+
+source .venv/bin/activate
+
+pip install -r requirements.txt
 ```
+
+set path
+
+Gan path cua project cho PYTHONPATH
+
+```
+(.venv) bachpx@bachpx-H310M-DS2:~/Projects/bach-s_trading_dashboard$ pwd
+/home/bachpx/Projects/bach-s_trading_dashboard
+
+
+export PYTHONPATH=export PYTHONPATH=/home/bachpx/Projects/bach-s_trading_dashboard:/home/bachpx:/usr/lib/python38.zip:/usr/lib/python3.8:/usr/lib/python3.8/lib-dynload:/home/bachpx/Projects/bach-s_trading_dashboard/.venv/lib/python3.8/site-packages
+```
+
+REF: https://stackoverflow.com/questions/58346352/modulenotfounderror-no-module-named-package-on-ubuntu
 
 ## Chap2: Tool and Infrastructure
 

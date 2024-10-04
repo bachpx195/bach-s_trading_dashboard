@@ -1,0 +1,10 @@
+pymysql
+scipy
+compress_pickle
+validators
+bokeh
+plotly
+numpy
+matplotlib
+pandas
+jupyter
