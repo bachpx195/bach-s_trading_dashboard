@@ -1,18 +1,12 @@
-import streamlit as st
-from hydralit_custom import HydraApp
-import hydralit_components as hc
-import apps
 
-if __name__ == '__main__':
-  app = HydraApp(
-      title='The Big Trade',
-  )
+from models.candlestick import Candlestick
+from models.merchandise_rate import MerchandiseRate
 
-  app.add_app("Home", icon="🏠", app=apps.HomeApp(title='Home'),is_home=True)
-  app.add_app("Data", app=apps.DataApp(title='Data'))
-#   app.add_app("True Range", app=apps.TrueRangeApp(title='True Range'))
-#   app.add_app("Hour Data", app=apps.HighestHourInDayApp(title='Hour Data'))
+import pandas as pd
 
-  app.add_loader_app(apps.MyLoadingApp(delay=0))
+candlestick = Candlestick()
+merchandise_rate = MerchandiseRate()
+merchandise_rate.find_by_slug('BTCUSDT')
 
-  app.run()
+df = candlestick.to_df()
+print(df)

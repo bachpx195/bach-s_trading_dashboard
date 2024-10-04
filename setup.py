@@ -9,10 +9,13 @@ setuptools.setup(
     install_requires=[
         'pymysql',
         'scipy',
-        'streamlit >=1.0',
         'compress_pickle',
-        'hydralit_components>=1.0.7',
         'validators',
         'bokeh',
+        'plotly',
+        'numpy',
+        'matplotlib',
+        'pandas',
+        'jupyter'
     ],
 )
