@@ -64,7 +64,7 @@ def count_continuous(df, row, sort_type='DESC'):
   count = 0
   while True:
     shift_number = -(count + 1) if sort_type == 'ASC' else count + 1
-    if df.shift(shift_number).loc[row.name].type != row.type:
+    if df.shift(shift_number).loc[row.name].candlestick_type != row.candlestick_type:
       break
     count = count + 1
   return count if count == 0 else count + 1
