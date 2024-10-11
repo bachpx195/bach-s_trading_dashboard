@@ -302,7 +302,6 @@ def draw_bar_horizontal_chart(df):
 
 def draw_histogram(list, bin=10, round_number=2):
   fig, ax = plt.subplots()
-  # import pdb; pdb.set_trace();
   ax.hist(refactor_list_of_float(list, round_number), bins=bin)
 
   return fig

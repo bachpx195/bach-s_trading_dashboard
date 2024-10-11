@@ -1,1 +1,2 @@
-DEBUG_MODE = True
+# True : False
+DEBUG_MODE = False

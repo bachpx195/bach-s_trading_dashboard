@@ -1,10 +1,11 @@
-from helpers.constants import HIGH_INDEX, LOW_INDEX, OPEN_INDEX, CLOSE_INDEX
 import numpy as np
 import matplotlib.pyplot as plt
-from helpers.utils import type_continuous, until_now_type, candlestick_type_by_hour
 from models.merchandise_rate import MerchandiseRate
 from models.candlestick import Candlestick
+from models.day_analytic import DayAnalytic
 from services.log_services import log
+from helpers.utils import refactor_list_of_float
+
 
 def get_hour_data_prices(MERCHANDISE_RATE, DAYS):
   merchandise_rate = MerchandiseRate()
@@ -12,12 +13,6 @@ def get_hour_data_prices(MERCHANDISE_RATE, DAYS):
   candlestick = Candlestick(merchandise_rate_id, 'hour', 24*DAYS, "DESC")
   data_prices = candlestick.to_df()
   
-
-  # custom data prices
-  data_prices['day'] = data_prices[['open']].apply(
-      lambda x: x.name.strftime("%Y-%m-%d"), axis=1)
-  
-
   # data_prices['type_21'] = candlestick_type_by_hour(data_prices, 21)
   # data_prices['type_7'] = candlestick_type_by_hour(data_prices, 7)
   # data_prices['type_7'] = candlestick_type_by_hour(data_prices, 12)
@@ -25,8 +20,35 @@ def get_hour_data_prices(MERCHANDISE_RATE, DAYS):
   # data_prices['until_now'] = until_now_type(data_prices)
   log(data_prices)
 
+  return data_prices, merchandise_rate_id
 
-  return data_prices
+
+def get_highest_hour(merchandise_rate_id, start_date, end_date):
+  highest_day_return_list = DayAnalytic(
+      merchandise_rate_id, start_date, end_date).get_highest_day_return()
+  return highest_day_return_list
+
+
+def draw_histogram(list, bin=10, round_number=2):
+  plt.hist(refactor_list_of_float(list, round_number), bins=bin)
+  plt.xlabel('Gio')
+  plt.ylabel('So luong')
+  plt.xticks(bin)
+  return plt
+
+
+def highest_hour_in_day_report(merchandise_rate_id, data_prices):
+  start_date = data_prices['date_database'][-1]
+
+
+  end_date = data_prices['date_database'][0]
+  highest_hour_list = get_highest_hour(
+      merchandise_rate_id, start_date, end_date)
+  log(highest_hour_list)
+  bin_histogram = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+  plt = draw_histogram(highest_hour_list, bin_histogram, 0)
+  return plt
+
 
 def hour_analytic(data_prices):
 #   total = data_prices.iloc[:, 0].count()
@@ -90,11 +112,11 @@ def detail_hour_analytic(data_prices, hour_observe=None):
   print(data_prices_down['return_oc'].describe())
   print(data_prices_down['return_oc'].sum())
 
-  # data_prices[data_prices['hour'] == hour_observe]['return_oc'].plot(figsize=[20, 10], kind='bar')
+  hour_observe_data_prices = data_prices[data_prices['hour'] == hour_observe]
+  hour_observe_data_prices['return_oc'].plot(figsize=[20, 10], kind='bar')
   
-  log(data_prices[data_prices['hour'] == hour_observe]['return_oc'])
-
-  type_continuous_group = data_prices.groupby(['type_continuous']).size()
+  type_continuous_group = hour_observe_data_prices.groupby(
+      ['continue_by_hour']).size()
   print(type_continuous_group)
 
   labels = type_continuous_group.index.values
@@ -104,6 +126,24 @@ def detail_hour_analytic(data_prices, hour_observe=None):
   _, ax1 = plt.subplots(figsize=(12, 7))
   ax1.pie(sizes, labels=labels, autopct='%1.1f%%')
   ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+  plt.legend()
+  return plt
+
+
+def continuous_report(data_prices):
+  type_continuous_group = data_prices.groupby(
+      ['continue_by_day']).size()
+  print(type_continuous_group)
+
+  labels = type_continuous_group.index.values
+  sizes = type_continuous_group.values
+
+  plt.figure()
+  _, ax1 = plt.subplots(figsize=(12, 7))
+  ax1.pie(sizes, labels=labels, autopct='%1.1f%%')
+  # Equal aspect ratio ensures that pie is drawn as a circle.
+  ax1.axis('equal')
 
   plt.legend()
   return plt

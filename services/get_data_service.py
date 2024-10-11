@@ -1,9 +1,9 @@
 import streamlit as st
 
-from apps.models.candlestick import Candlestick
-from apps.models.merchandise_rate import MerchandiseRate
-from apps.services.ochl_dataframe import *
-from apps.helpers.datetime_helper import previous_day, get_start_of_week
+from models.candlestick import Candlestick
+from models.merchandise_rate import MerchandiseRate
+from services.ochl_dataframe import *
+from helpers.datetime_helper import previous_day, get_start_of_week
 
 
 class GetDataService:
