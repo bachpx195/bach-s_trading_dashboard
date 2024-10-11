@@ -1,10 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import collections
 from models.merchandise_rate import MerchandiseRate
 from models.candlestick import Candlestick
 from models.day_analytic import DayAnalytic
 from services.log_services import log
 from helpers.utils import refactor_list_of_float
+from helpers.constants import HOUR_LIST
+
 
 
 def get_hour_data_prices(MERCHANDISE_RATE, DAYS):
@@ -23,10 +26,12 @@ def get_hour_data_prices(MERCHANDISE_RATE, DAYS):
   return data_prices, merchandise_rate_id
 
 
-def get_highest_hour(merchandise_rate_id, start_date, end_date):
-  highest_day_return_list = DayAnalytic(
-      merchandise_rate_id, start_date, end_date).get_highest_day_return()
-  return highest_day_return_list
+def get_analytic_hour(merchandise_rate_id, data_prices):
+  start_date = data_prices['date_database'][-1]
+  end_date = data_prices['date_database'][0]
+  highest_hour_return, reverse_increase_hour, reverse_decrease_hour = DayAnalytic(
+      merchandise_rate_id, start_date, end_date).get_analytic_hour()
+  return highest_hour_return, reverse_increase_hour, reverse_decrease_hour
 
 
 def draw_histogram(list, bin=10, round_number=2):
@@ -37,16 +42,36 @@ def draw_histogram(list, bin=10, round_number=2):
   return plt
 
 
-def highest_hour_in_day_report(merchandise_rate_id, data_prices):
-  start_date = data_prices['date_database'][-1]
+def highest_hour_in_day_report(hour_list):
+  log(hour_list, "highest_hour_list")
+  group_hour_list = collections.Counter(hour_list)
+  plt.bar(HOUR_LIST, [group_hour_list[hour] for hour in HOUR_LIST])
+  plt.xlabel('Gio')
+  plt.ylabel('So luong')
+  plt.xticks(HOUR_LIST)
+  plt.yticks(list(group_hour_list.values()))
+  return plt
 
 
-  end_date = data_prices['date_database'][0]
-  highest_hour_list = get_highest_hour(
-      merchandise_rate_id, start_date, end_date)
-  log(highest_hour_list)
-  bin_histogram = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
-  plt = draw_histogram(highest_hour_list, bin_histogram, 0)
+def reverse_increase_hour_report(hour_list):
+  log(hour_list, "reverse_increase_hour")
+  group_hour_list = collections.Counter(hour_list)
+  plt.bar(HOUR_LIST, [group_hour_list[hour] for hour in HOUR_LIST])
+  plt.xlabel('Gio')
+  plt.ylabel('So luong')
+  plt.xticks(HOUR_LIST)
+  plt.yticks(list(group_hour_list.values()))
+  return plt
+
+
+def reverse_decrease_hour_report(hour_list):
+  log(hour_list, "reverse_decrease_hour")
+  group_hour_list = collections.Counter(hour_list)
+  plt.bar(HOUR_LIST, [group_hour_list[hour] for hour in HOUR_LIST])
+  plt.xlabel('Gio')
+  plt.ylabel('So luong')
+  plt.xticks(HOUR_LIST)
+  plt.yticks(list(group_hour_list.values()))
   return plt
 
 

@@ -8,8 +8,10 @@ class DayAnalytic:
     self.start_date = start_date
     self.end_date = end_date
 
-  def get_highest_day_return(self):
-    sql_query = 'SELECT date, highest_hour_return FROM DailyTradingJournal_development.day_analytics WHERE '
+
+  # highest_hour_return, reverse_increase_hour, reverse_decrease_hour
+  def get_analytic_hour(self):
+    sql_query = 'SELECT date, highest_hour_return, reverse_increase_hour, reverse_decrease_hour FROM DailyTradingJournal_development.day_analytics WHERE '
     if self.start_date and self.end_date:
       sql_query = sql_query + \
           f"(day_analytics.date BETWEEN '{self.start_date} 00:00:00' AND '{self.end_date} 23:23:59') AND "
@@ -20,5 +22,15 @@ class DayAnalytic:
     log(sql_query)
     db.cur.execute(sql_query)
     datas = list(db.cur.fetchall())
-    return [da[1] for da in datas if da[1] is not None]
+    highest_hour_return = []
+    reverse_increase_hour = []
+    reverse_decrease_hour = []
+    for da in datas:
+      if da[1] is not None:
+        highest_hour_return.append(da[1])
+      if da[2] is not None:
+        reverse_increase_hour.append(da[2])
+      if da[3] is not None:
+        reverse_decrease_hour.append(da[3])
+    return highest_hour_return, reverse_increase_hour, reverse_decrease_hour
 
