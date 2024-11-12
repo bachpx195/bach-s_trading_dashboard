@@ -86,7 +86,10 @@ class Candlestick:
             for da in datas:
                 row = []
                 for column in columns:
-                    row.append(da[HOUR_COLUMN_HASH[column]])
+                    if self.join_analytic_table == 'hour_analytics':
+                        row.append(da[HOUR_COLUMN_HASH[column]])
+                    if self.join_analytic_table == 'day_analytics':
+                        row.append(da[DAY_COLUMN_HASH[column]])
                 data.append(tuple(row))
             df = pd.DataFrame(columns=columns, data=data)
             if not df['date'].empty:

@@ -10,10 +10,11 @@ from helpers.constants import HOUR_LIST
 
 
 
-def get_hour_data_prices(MERCHANDISE_RATE, DAYS):
+def get_hour_data_prices(MERCHANDISE_RATE, DAYS, START_DATE=None, END_DATE=None):
   merchandise_rate = MerchandiseRate()
   merchandise_rate_id = merchandise_rate.find_by_slug(MERCHANDISE_RATE)
-  candlestick = Candlestick(merchandise_rate_id, 'hour', 24*DAYS, "DESC")
+  candlestick = Candlestick(merchandise_rate_id, 'hour',
+                            24*DAYS, "DESC", start_date=START_DATE, end_date=END_DATE)
   data_prices = candlestick.to_df()
   
   # data_prices['type_21'] = candlestick_type_by_hour(data_prices, 21)
