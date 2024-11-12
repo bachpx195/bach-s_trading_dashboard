@@ -4,7 +4,7 @@ import collections
 from models.merchandise_rate import MerchandiseRate
 from models.candlestick import Candlestick
 from models.day_analytic import DayAnalytic
-from services.log_services import log
+from services.log_services import log, log_print
 from helpers.utils import refactor_list_of_float
 from helpers.constants import HOUR_LIST
 
@@ -44,7 +44,7 @@ def draw_histogram(list, bin=10, round_number=2):
 
 
 def highest_hour_in_day_report(hour_list):
-  log(hour_list, "highest_hour_list")
+  log_print(hour_list, "highest_hour_list")
   group_hour_list = collections.Counter(hour_list)
   plt.bar(HOUR_LIST, [group_hour_list[hour] for hour in HOUR_LIST])
   plt.xlabel('Gio')
@@ -55,7 +55,7 @@ def highest_hour_in_day_report(hour_list):
 
 
 def reverse_increase_hour_report(hour_list):
-  log(hour_list, "reverse_increase_hour")
+  log_print(hour_list, "reverse_increase_hour")
   group_hour_list = collections.Counter(hour_list)
   plt.bar(HOUR_LIST, [group_hour_list[hour] for hour in HOUR_LIST])
   plt.xlabel('Gio')
@@ -66,7 +66,7 @@ def reverse_increase_hour_report(hour_list):
 
 
 def reverse_decrease_hour_report(hour_list):
-  log(hour_list, "reverse_decrease_hour")
+  log_print(hour_list, "reverse_decrease_hour")
   group_hour_list = collections.Counter(hour_list)
   plt.bar(HOUR_LIST, [group_hour_list[hour] for hour in HOUR_LIST])
   plt.xlabel('Gio')
