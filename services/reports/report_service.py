@@ -35,6 +35,14 @@ def get_analytic_hour(merchandise_rate_id, data_prices):
   return highest_hour_return, reverse_increase_hour, reverse_decrease_hour
 
 
+def get_analytic_return(merchandise_rate_id, data_prices):
+  start_date = data_prices['date_database'][-1]
+  end_date = data_prices['date_database'][0]
+  df = DayAnalytic(
+      merchandise_rate_id, start_date, end_date).get_analytic_return()
+  return df
+
+
 def draw_histogram(list, bin=10, round_number=2):
   plt.hist(refactor_list_of_float(list, round_number), bins=bin)
   plt.xlabel('Gio')
